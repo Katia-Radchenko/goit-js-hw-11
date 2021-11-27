@@ -17,7 +17,7 @@ async function fetchImages(pictureName) {
   try {
     const images = await axios.get(FULL_URL);
     page += 1;
-    // console.log(images);
+    
     
     imagesCount += images.data.hits.length
 
