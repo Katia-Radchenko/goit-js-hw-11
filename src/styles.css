@@ -1,0 +1,85 @@
+
+img {
+  display: block;
+  width: 100%;
+}
+
+a:link {
+  text-decoration: none;
+}
+header {
+  background: rgb(238, 174, 202);
+  background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+  margin-bottom: 10px;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+input {
+  border: 1px solid rgba(148, 187, 233, 1);
+
+  margin-right: 10px;
+  border-radius: 7px;
+  padding: 10px;
+}
+
+button {
+  background: transparent;
+  border: none;
+  font-size: 21px;
+}
+
+.gallery{
+  grid-template-columns: repeat(3,1fr);
+  gap: 20px;
+  display: grid;
+}
+
+.container{
+  max-width: 1200px;
+  margin: 0 auto;
+
+}
+
+.photo-card {
+  background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+  border-radius: 12px;
+  flex-direction: column;
+  gap: 8px;
+  display: flex;
+  box-shadow: 0 0 5px rgba(0,0,0,.1);
+}
+.info {
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 12px;
+  display: flex;
+}
+
+.photo-card img {
+  height: 240px;
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+img {
+  width: 100%;
+  display: block;
+}
+
+info-item {
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  display: flex;
+}
+
+.lightbox {
+  color: #343434;
+}

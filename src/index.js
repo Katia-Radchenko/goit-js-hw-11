@@ -1,21 +1,8 @@
-import axios from "axios";
-
-import { BASE_URL, options } from './api-service';
+import axios from 'axios';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import SimpleLightbox from "simplelightbox";
-import "simplelightbox/dist/simple-lightbox.min.css";
-
-let totalHits = 0;
-let isLoadingMore = false;
-let reachedEnd = false;
-
-
-const refs = {
-  form: document.getElementById('search-form'),
-  gallery: document.querySelector('.gallery'),
-  loader: document.querySelector('.loader'),
-  searchInput: document.querySelector('input[name="searchQuery"]')
-};
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
+import { BASE_URL, options } from './api-service';
 
 
 const lightbox = new SimpleLightbox('.lightbox', {
@@ -26,8 +13,20 @@ const lightbox = new SimpleLightbox('.lightbox', {
   scrollZoom: false,
   close: false,
 });
+let totalHits = 0;
+let isLoadingMore = false;
+let reachedEnd = false;
 
-refs.form.addEventListener('submit' , onFormSybmit );
+
+const refs = {
+  form: document.getElementById('search-form'),
+  gallery: document.querySelector('.gallery'),
+  loader: document.querySelector('.loader'),
+  searchInput: document.querySelector('input[name="searchQuery"]'),
+};
+
+
+refs.form.addEventListener('submit', onFormSybmit);
 window.addEventListener('scroll', onScroll);
 document.addEventListener('DOMContentLoaded', hideLoader);
 
@@ -38,6 +37,7 @@ function showLoader() {
 function hideLoader() {
   refs.loader.style.display = 'none';
 }
+
 async function loadMore() {
   isLoadingMore = true;
   options.params.page += 1;
@@ -55,7 +55,7 @@ async function loadMore() {
   }
 }
 
-function onScroll (){
+function onScroll() {
   const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
   const scrollThreshold = 300;
   if (
@@ -68,59 +68,59 @@ function onScroll (){
   }
 }
 
- async function  onFormSybmit (e){
-    e.preventDefault();
-    options.params.q = refs.searchInput.value.trim();
-    if (options.params.q === '') {
-      return;
-    }
-    options.params.page = 1;
-    refs.gallery.innerHTML = '';
-    reachedEnd = false;
-
-    try {
-      showLoader();
-      const response = await axios.get(BASE_URL, options);
-      totalHits = response.data.totalHits;
-      const hits = response.data.hits;
-      if (hits.length === 0) {
-        Notify.failure(
-          'Sorry, there are no images matching your search query. Please try again.'
-        );
-      } else {
-        Notify.success(`Hooray! We found ${totalHits} images.`);
-         markupGallery(hits);
-      }
-      refs.searchInput.value = '';
-      hideLoader();
-    } catch (err) {
-      Notify.failure(err);
-      hideLoader();
-    }
+async function onFormSybmit(e) {
+  e.preventDefault();
+  options.params.q = refs.searchInput.value.trim();
+  if (options.params.q === '') {
+    return;
   }
+  options.params.page = 1;
+  refs.gallery.innerHTML = '';
+  reachedEnd = false;
+
+  try {
+    showLoader();
+    const response = await axios.get(BASE_URL, options);
+    totalHits = response.data.totalHits;
+    const hits = response.data.hits;
+    if (hits.length === 0) {
+      Notify.failure(
+        'Sorry, there are no images matching your search query. Please try again.',
+      );
+    } else {
+      Notify.success(`Hooray! We found ${totalHits} images.`);
+      markupGallery(hits);
+    }
+    refs.searchInput.value = '';
+    hideLoader();
+  } catch (err) {
+    Notify.failure(err);
+    hideLoader();
+  }
+}
 
 
-function  markupGallery(hits) {
+function markupGallery(hits) {
   const markup = hits
     .map(item => {
       return `
-            <a href="${item.largeImageURL}" class="lightbox">
-                <div class="photo-card">
-                    <img src="${item.webformatURL}" alt="${item.tags}" loading="lazy" />
-                    <div class="info">
-                        <p class="info-item">
+            <a href='${item.largeImageURL}' class='lightbox'>
+                <div class='photo-card'>
+                    <img src='${item.webformatURL}' alt='${item.tags}' loading='lazy' />
+                    <div class='info'>
+                        <p class='info-item'>
                             <b>Likes</b>
                             ${item.likes}
                         </p>
-                        <p class="info-item">
+                        <p class='info-item'>
                             <b>Views</b>
                             ${item.views}
                         </p>
-                        <p class="info-item">
+                        <p class='info-item'>
                             <b>Comments</b>
                             ${item.comments}
                         </p>
-                        <p class="info-item">
+                        <p class='info-item'>
                             <b>Downloads</b>
                             ${item.downloads}
                         </p>
@@ -135,7 +135,7 @@ function  markupGallery(hits) {
 
   if (options.params.page * options.params.per_page >= totalHits) {
     if (!reachedEnd) {
-      Notify.info("We're sorry, but you've reached the end of search results.");
+      Notify.info('We\'re sorry, but you\'ve reached the end of search results.');
       reachedEnd = true;
     }
   }
